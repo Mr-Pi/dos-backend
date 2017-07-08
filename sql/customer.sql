@@ -5,13 +5,13 @@
 --  
 
 CREATE TABLE customer (
-		username string NOT NULL ,
-		fullName string,
+		username text NOT NULL ,
+		fullName text,
 		credit float NOT NULL  DEFAULT 0,
-		password string,
-		salt string NOT NULL ,
-		perms unsigned int NOT NULL  DEFAULT 0,
-		tag string
+		password text,
+		salt text NOT NULL ,
+		perms bigint NOT NULL  DEFAULT 0,
+		tag text
 );
 
 -- 

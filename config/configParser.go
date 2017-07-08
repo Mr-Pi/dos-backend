@@ -1,8 +1,8 @@
 package config
 
 import (
-	"os"
 	"encoding/json"
+	"os"
 )
 
 func Parse() (conf Config) {
@@ -11,16 +11,19 @@ func Parse() (conf Config) {
 			Listen: ":8081",
 		},
 		Redis: RedisConfig{
-			Address: "localhost:6379",
+			Address:  "localhost:6379",
 			Password: "",
 			Database: 0,
 		},
 		Duration: DurationConfig{
 			Auth: "168h",
 		},
+		PGsql: PGsqlConfig{
+			Url: "postgres://dos:dos@localhost:5432/dos?sslmode=disable",
+		},
 	}
 
-	file,err := os.Open("config.json")
+	file, err := os.Open("config.json")
 	if err != nil && os.IsNotExist(err) {
 		return
 	}

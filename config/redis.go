@@ -1,7 +1,7 @@
 package config
 
 type RedisConfig struct {
-	Address string
+	Address  string
 	Password string
 	Database int
 }

@@ -5,8 +5,8 @@
 --  
 
 CREATE TABLE perms (
-		id unsigned int NOT NULL ,
-		type string,
+		id bigint NOT NULL ,
+		type text,
 		patchDrinkAll bool NOT NULL  DEFAULT false,
 		modSupplier bool NOT NULL  DEFAULT false,
 		modDrink bool NOT NULL  DEFAULT false,

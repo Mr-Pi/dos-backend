@@ -5,11 +5,11 @@
 --  
 
 CREATE TABLE drink (
-		EAN string NOT NULL ,
-		name string,
-		amount unsigned int NOT NULL  DEFAULT 0,
-		supplier unsigned int NOT NULL  DEFAULT 0,
-		redeliverAmount unsigned int NOT NULL  DEFAULT 0,
+		EAN text NOT NULL ,
+		name text,
+		amount bigint NOT NULL  DEFAULT 0,
+		supplier bigint NOT NULL  DEFAULT 0,
+		redeliverAmount bigint NOT NULL  DEFAULT 0,
 		priceOrder float NOT NULL ,
 		priceResell float NOT NULL 
 );
