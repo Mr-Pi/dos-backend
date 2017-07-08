@@ -7,7 +7,7 @@
 CREATE TABLE perms (
 		id bigint NOT NULL ,
 		type text,
-		patchDrinkAll bool NOT NULL  DEFAULT false,
+		patchDrinkEveryone bool NOT NULL  DEFAULT false,
 		modSupplier bool NOT NULL  DEFAULT false,
 		modDrink bool NOT NULL  DEFAULT false,
 		modUser bool NOT NULL  DEFAULT false,

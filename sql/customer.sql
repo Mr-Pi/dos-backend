@@ -6,11 +6,12 @@
 
 CREATE TABLE customer (
 		username text NOT NULL ,
-		fullName text,
+		firstName text NOT NULL ,
 		credit float NOT NULL  DEFAULT 0,
 		password text,
 		salt text,
-		perms bigint NOT NULL  DEFAULT 1
+		perms bigint NOT NULL  DEFAULT 1,
+		lastName text NOT NULL 
 );
 
 -- 

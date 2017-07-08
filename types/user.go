@@ -1,9 +1,10 @@
 package types
 
 type User struct {
-	Username string
-	FullName string
-	Credit float32
-	Password string
+	Username    string
+	FirstName   string
+	LastName    string
+	Credit      float64
+	Password    string
 	Permissions UserPermissions
 }
