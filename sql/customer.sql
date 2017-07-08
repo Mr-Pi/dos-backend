@@ -9,9 +9,8 @@ CREATE TABLE customer (
 		fullName text,
 		credit float NOT NULL  DEFAULT 0,
 		password text,
-		salt text NOT NULL ,
-		perms bigint NOT NULL  DEFAULT 0,
-		tag text
+		salt text,
+		perms bigint NOT NULL  DEFAULT 0
 );
 
 -- 
