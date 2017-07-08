@@ -13,6 +13,7 @@ func InitRouter(cfg config.Config) {
 	r := mux.NewRouter()
 	r.HandleFunc("/", homeHandler.Handle).Methods("GET")
 	r.HandleFunc("/user", userListHandler.Handle).Methods("GET")
-	r.HandleFunc("/user/username", userHandler.Handle).Methods("POST,PATCH,GET,DELETE")
+	r.HandleFunc("/user/{username}", userHandler.HandleGET).Methods("GET")
+	r.HandleFunc("/user/{username}", userHandler.HandleMOD).Methods("POST")
 	http.ListenAndServe(cfg.Listen.Listen, r)
 }
