@@ -1,10 +1,12 @@
 package types
 
 type Drink struct {
-	Name string
-	PriceOrder float32
-	PriceResell float32
-	Amount uint32
-	Supplier Supplier
-	RedeliverAmount uint32
+	EAN             string
+	Name            string
+	PriceOrder      float64
+	PriceResell     float64
+	Amount          int64
+	Supplier        Supplier
+	RedeliverAmount int64
+	ImgUrl          string
 }

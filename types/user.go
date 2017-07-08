@@ -6,5 +6,6 @@ type User struct {
 	LastName    string
 	Credit      float64
 	Password    string
+	RFIDTag     []string
 	Permissions UserPermissions
 }

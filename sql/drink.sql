@@ -11,7 +11,8 @@ CREATE TABLE drink (
 		supplier bigint NOT NULL  DEFAULT 1,
 		redeliverAmount bigint NOT NULL  DEFAULT 0,
 		priceOrder float NOT NULL ,
-		priceResell float NOT NULL 
+		priceResell float NOT NULL ,
+		imgUrl text
 );
 
 -- 

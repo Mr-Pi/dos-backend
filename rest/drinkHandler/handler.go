@@ -1,4 +1,4 @@
-package userHandler
+package drinkHandler
 
 import (
 	"encoding/json"
@@ -8,19 +8,26 @@ import (
 	"net/http"
 )
 
-func HandleGET(w http.ResponseWriter, r *http.Request) {
-	username := mux.Vars(r)["username"]
-	log.Println("Request User", username)
+func HandleList(w http.ResponseWriter, r *http.Request) {
+	drinks := pgsql.ListDrinks()
 	w.Header().Set("Content-Type", "application/json")
-	if pgsql.TestUser(username) {
-		user := pgsql.GETUser(username)
-		json.NewEncoder(w).Encode(user)
+	json.NewEncoder(w).Encode(drinks)
+}
+
+func HandleGET(w http.ResponseWriter, r *http.Request) {
+	drinkEAN := mux.Vars(r)["drink"]
+	log.Println("Request Drink", drinkEAN)
+	w.Header().Set("Content-Type", "application/json")
+	if pgsql.TestDrink(drinkEAN) {
+		drink := pgsql.GETDrink(drinkEAN)
+		json.NewEncoder(w).Encode(drink)
 	} else {
 		status, _ := json.Marshal(http.StatusText(404))
 		http.Error(w, string(status), 404)
 	}
 }
+
 func HandleMOD(w http.ResponseWriter, r *http.Request) {
-	log.Println("Mod User", mux.Vars(r)["username"])
+	log.Println("Mod Drink", mux.Vars(r)["username"])
 	w.Header().Set("Content-Type", "application/json")
 }
