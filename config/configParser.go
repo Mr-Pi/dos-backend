@@ -10,6 +10,14 @@ func Parse() (conf Config) {
 		Listen: ListenConfig{
 			Listen: ":8081",
 		},
+		Redis: RedisConfig{
+			Address: "localhost:6379",
+			Password: "",
+			Database: 0,
+		},
+		Duration: DurationConfig{
+			Auth: "168h",
+		},
 	}
 
 	file,err := os.Open("config.json")
