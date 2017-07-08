@@ -10,7 +10,7 @@ CREATE TABLE customer (
 		credit float NOT NULL  DEFAULT 0,
 		password text,
 		salt text,
-		perms bigint NOT NULL  DEFAULT 0
+		perms bigint NOT NULL  DEFAULT 1
 );
 
 -- 

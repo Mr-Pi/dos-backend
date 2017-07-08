@@ -8,7 +8,7 @@ CREATE TABLE drink (
 		EAN text NOT NULL ,
 		name text,
 		amount bigint NOT NULL  DEFAULT 0,
-		supplier bigint NOT NULL  DEFAULT 0,
+		supplier bigint NOT NULL  DEFAULT 1,
 		redeliverAmount bigint NOT NULL  DEFAULT 0,
 		priceOrder float NOT NULL ,
 		priceResell float NOT NULL 

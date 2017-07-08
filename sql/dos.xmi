@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<XMI verified="false" xmlns:UML="http://schema.omg.org/spec/UML/1.3" timestamp="2017-07-08T20:52:43" xmi.version="1.2">
+<XMI verified="false" xmlns:UML="http://schema.omg.org/spec/UML/1.3" timestamp="2017-07-08T20:57:29" xmi.version="1.2">
  <XMI.header>
   <XMI.documentation>
    <XMI.exporter>umbrello uml modeller http://umbrello.kde.org</XMI.exporter>
@@ -96,7 +96,7 @@
        <UML:EntityAttribute attributes="" auto_increment="0" isSpecification="false" isLeaf="false" namespace="dAvr8IT5W9mG" isAbstract="false" values="" name="EAN" type="8qlY2KbIgHDt" initialValue="" isRoot="false" xmi.id="8BjaWbRmjfcM" visibility="private" dbindex_type="1102" allow_null="0"/>
        <UML:EntityAttribute attributes="" auto_increment="0" isSpecification="false" isLeaf="false" namespace="dAvr8IT5W9mG" isAbstract="false" values="" name="name" type="8qlY2KbIgHDt" initialValue="" isRoot="false" xmi.id="OdkOqlDb7er1" visibility="private" dbindex_type="1100" allow_null="1"/>
        <UML:EntityAttribute attributes="" auto_increment="0" isSpecification="false" isLeaf="false" namespace="dAvr8IT5W9mG" isAbstract="false" values="" name="amount" type="x2yEuNUw7G74" initialValue="0" isRoot="false" xmi.id="EVwYV1oQKvVA" visibility="private" dbindex_type="1100" allow_null="0"/>
-       <UML:EntityAttribute attributes="" auto_increment="0" isSpecification="false" isLeaf="false" namespace="dAvr8IT5W9mG" isAbstract="false" values="" name="supplier" type="x2yEuNUw7G74" initialValue="0" isRoot="false" xmi.id="5I71hW6Pn44k" visibility="private" dbindex_type="1102" allow_null="0"/>
+       <UML:EntityAttribute attributes="" auto_increment="0" isSpecification="false" isLeaf="false" namespace="dAvr8IT5W9mG" isAbstract="false" values="" name="supplier" type="x2yEuNUw7G74" initialValue="1" isRoot="false" xmi.id="5I71hW6Pn44k" visibility="private" dbindex_type="1102" allow_null="0"/>
        <UML:EntityAttribute attributes="" auto_increment="0" isSpecification="false" isLeaf="false" namespace="dAvr8IT5W9mG" isAbstract="false" values="" name="redeliverAmount" type="x2yEuNUw7G74" initialValue="0" isRoot="false" xmi.id="pPUyWhbnxguQ" visibility="private" dbindex_type="1100" allow_null="0"/>
        <UML:EntityAttribute attributes="" auto_increment="0" isSpecification="false" isLeaf="false" namespace="dAvr8IT5W9mG" isAbstract="false" values="" name="priceOrder" type="JV81q9RQ8y1V" initialValue="" isRoot="false" xmi.id="bkbocv14cqBC" visibility="private" dbindex_type="1100" allow_null="0"/>
        <UML:EntityAttribute attributes="" auto_increment="0" isSpecification="false" isLeaf="false" namespace="dAvr8IT5W9mG" isAbstract="false" values="" name="priceResell" type="JV81q9RQ8y1V" initialValue="" isRoot="false" xmi.id="r05SEdifuO8W" visibility="private" dbindex_type="1100" allow_null="0"/>
@@ -131,7 +131,7 @@
        <UML:EntityAttribute attributes="" auto_increment="0" isSpecification="false" isLeaf="false" namespace="M0y4EyFfHDZj" isAbstract="false" values="" name="credit" type="JV81q9RQ8y1V" initialValue="0" isRoot="false" xmi.id="bbFSt7frdbHb" visibility="private" dbindex_type="1100" allow_null="0"/>
        <UML:EntityAttribute attributes="" auto_increment="0" isSpecification="false" isLeaf="false" namespace="M0y4EyFfHDZj" isAbstract="false" values="" name="password" type="8qlY2KbIgHDt" initialValue="" isRoot="false" xmi.id="eJ5Jun8Bff4v" visibility="private" dbindex_type="1100" allow_null="1"/>
        <UML:EntityAttribute attributes="" auto_increment="0" isSpecification="false" isLeaf="false" namespace="M0y4EyFfHDZj" isAbstract="false" values="" name="salt" type="8qlY2KbIgHDt" initialValue="" isRoot="false" xmi.id="Ypkw6lqFCINM" visibility="private" dbindex_type="1100" allow_null="1"/>
-       <UML:EntityAttribute attributes="" auto_increment="0" isSpecification="false" isLeaf="false" namespace="M0y4EyFfHDZj" isAbstract="false" values="" name="perms" type="x2yEuNUw7G74" initialValue="0" isRoot="false" xmi.id="rND8poPcrCAN" visibility="private" dbindex_type="1102" allow_null="0"/>
+       <UML:EntityAttribute attributes="" auto_increment="0" isSpecification="false" isLeaf="false" namespace="M0y4EyFfHDZj" isAbstract="false" values="" name="perms" type="x2yEuNUw7G74" initialValue="1" isRoot="false" xmi.id="rND8poPcrCAN" visibility="private" dbindex_type="1102" allow_null="0"/>
        <UML:UniqueConstraint isSpecification="false" isLeaf="false" namespace="M0y4EyFfHDZj" isAbstract="false" isPrimary="1" name="constraint_username" isRoot="false" xmi.id="cBNDrPY8qawJ" visibility="public">
         <UML:EntityAttribute attributes="" auto_increment="0" isSpecification="false" isLeaf="false" namespace="M0y4EyFfHDZj" isAbstract="false" values="" name="username" type="8qlY2KbIgHDt" initialValue="" isRoot="false" xmi.id="JmedUQsw4zuX" visibility="private" dbindex_type="1102" allow_null="0"/>
        </UML:UniqueConstraint>
