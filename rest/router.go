@@ -5,11 +5,12 @@ import (
 	"github.com/Mr-Pi/dos-backend/rest/homeHandler"
 	"github.com/Mr-Pi/dos-backend/rest/userListHandler"
 	"net/http"
+	"github.com/Mr-Pi/dos-backend/config"
 )
 
-func InitRouter() {
+func InitRouter(cfg config.Config) {
 	r := mux.NewRouter()
 	r.HandleFunc("/", homeHandler.Handle).Methods("GET")
 	r.HandleFunc("/user", userListHandler.Handle).Methods("GET")
-	http.ListenAndServe(":8080", r)
+	http.ListenAndServe(cfg.Listen.Listen, r)
 }
