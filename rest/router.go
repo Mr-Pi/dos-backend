@@ -8,6 +8,6 @@ import (
 
 func InitRouter() {
 	r := mux.NewRouter()
-	r.HandleFunc("/", homeHandler.Handle)
+	r.HandleFunc("/", homeHandler.Handle).Methods("GET")
 	http.ListenAndServe(":8080", r)
 }
