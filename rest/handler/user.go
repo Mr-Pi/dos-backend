@@ -39,6 +39,11 @@ func GetUser(request *restful.Request, response *restful.Response) {
 		return
 	}
 
+	if username == "_self" {
+		response.WriteEntity(pgsql.GETUser(ownUser))
+		return
+	}
+
 	rc = permissions.CheckUserPermissions(ownUser, requiredPermissionsUserInfo)
 	if ownUser == username || rc == 200 {
 		if pgsql.TestUser(username) {
