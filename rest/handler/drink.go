@@ -42,7 +42,7 @@ func PutDrink(req *restful.Request, resp *restful.Response) {
 		return
 	}
 	drink := new(types.Drink)
-	err := req.ReadEntity(user)
+	err := req.ReadEntity(drink)
 	if err != nil {
 		resp.WriteErrorString(http.StatusInternalServerError, err.Error())
 		return
@@ -54,10 +54,10 @@ func PutDrink(req *restful.Request, resp *restful.Response) {
 		ok = pgsql.CreateDrink(*drink)
 	}
 	if !ok {
-		resp.WriteErrorString(http.StatusInternalServerError, "Can not create user")
+		resp.WriteErrorString(http.StatusInternalServerError, "Can not create drink")
 		return
 	}
-	resp.WriteHeaderAndEntity(http.StatusCreated, user)
+	resp.WriteHeaderAndEntity(http.StatusCreated, drink)
 }
 
 func DrinkDrink(req *restful.Request, resp *restful.Response) {
