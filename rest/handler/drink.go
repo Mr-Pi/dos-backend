@@ -13,6 +13,10 @@ var otherUserPermission = types.UserPermissions{
 	PatchDrinkEveryone: true,
 }
 
+var requiredPermissionsDrinkMod = types.UserPermissions{
+	ModDrink: true,
+}
+
 func GetDrink(request *restful.Request, response *restful.Response) {
 	drinkEAN := request.PathParameter("ean")
 	if pgsql.TestDrink(drinkEAN) {
@@ -26,22 +30,40 @@ func ListDrinks(request *restful.Request, response *restful.Response) {
 	response.WriteEntity(pgsql.ListDrinks())
 }
 
-/*func PutDrink(req *restful.Request, resp *restful.Response) {
-	drinkEAN := req.PathParameter("ean")
-	if pgsql.TestDrink(drinkEAN) {
-		resp.WriteEntity(pgsql.GETDrink(drinkEAN))
-		// TODO Overwrite
-	} else {
-		// TODO Create
-		req.
-		req.bo
-		pgsql.CreateDrink(types.Drink)
-		resp.WriteErrorString(http.StatusNotFound, "Drink Not Found")
+func PutDrink(req *restful.Request, resp *restful.Response) {
+	ownUser, rc := permissions.ReqToUser(req.Request)
+	ean := req.PathParameter("ean")
+	if rc != 200 {
+		resp.WriteErrorString(rc, "Can't check permissions")
+		return
 	}
-}*/
+	rc = permissions.CheckUserPermissions(ownUser, requiredPermissionsDrinkMod)
+	if rc != 200 {
+		resp.WriteErrorString(rc, "You need more permissions to create drinks")
+		return
+	}
+	drink := new(types.Drink)
+	err := req.ReadEntity(drink)
+	if err != nil {
+		resp.WriteErrorString(http.StatusInternalServerError, err.Error())
+		return
+	}
+	var ok bool
+	if pgsql.TestDrink(ean) {
+		ok = pgsql.OverwriteDrink(*drink)
+	} else {
+		ok = pgsql.CreateDrink(*drink)
+	}
+	if !ok {
+		resp.WriteErrorString(http.StatusInternalServerError, "Can not create drink")
+		return
+	}
+	resp.WriteHeaderAndEntity(http.StatusCreated, drink)
+}
 
 func DrinkDrink(req *restful.Request, resp *restful.Response) {
 	// Username
+	fmt.Println("LAL: " + req.Request.Header.Get("Authorization"))
 	username, rc := permissions.ReqToUser(req.Request)
 	if rc != 200 {
 		resp.WriteErrorString(rc, "Can't check permissions")
@@ -69,7 +91,6 @@ func DrinkDrink(req *restful.Request, resp *restful.Response) {
 		return
 	}
 	// Drink
-	fmt.Printf("%s -> %s\n", targetUser, drinkEAN)
 	drink := pgsql.GETDrink(drinkEAN)
 	err := pgsql.DecrementDrinkAmount(drinkEAN, 1)
 	if err != nil {

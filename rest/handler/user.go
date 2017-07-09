@@ -86,7 +86,7 @@ func AddUser(request *restful.Request, response *restful.Response) {
 	err = pgsql.CreateUser(*user)
 	if err != nil {
 		log.Println("Can't create user", user, err)
-		response.WriteErrorString(http.StatusInternalServerError, "User may allready exist")
+		response.WriteErrorString(http.StatusInternalServerError, "User may already exist")
 		return
 	}
 	response.WriteHeaderAndEntity(http.StatusCreated, user)
