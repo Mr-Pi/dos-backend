@@ -8,4 +8,5 @@ type User struct {
 	Password    string
 	RFIDTag     []string
 	Permissions string
+	Salt        string
 }

@@ -62,6 +62,7 @@ func (p UserResource) RegisterTo(container *restful.Container) {
 	ws.Path("/users")
 	ws.Consumes(restful.MIME_JSON)
 	ws.Produces(restful.MIME_JSON)
+	ws.Route(ws.PATCH("/{username}").To(handler.UpdateUser))
 	ws.Route(ws.PUT("/{username}").To(handler.AddUser))
 	ws.Route(ws.GET("/{username}").To(handler.GetUser))
 	ws.Route(ws.GET("").To(handler.ListUsers))

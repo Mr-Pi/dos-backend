@@ -6,7 +6,7 @@ import (
 )
 
 func CreateUser(user types.User) (err error) {
-	_, err = db.Query(`INSERT INTO customer ( username, firstname, lastname, perms ) VALUES ($1,$2,$3,$4);`, user.Username, user.FirstName, user.LastName, user.Permissions)
+	_, err = db.Query(`INSERT INTO customer ( username, firstname, lastname, perms, password, salt ) VALUES ($1,$2,$3,$4,$5,$6);`, user.Username, user.FirstName, user.LastName, user.Permissions, user.Password, user.Salt)
 	return err
 }
 
@@ -35,12 +35,14 @@ func TestUser(username string) bool {
 
 func GETUser(username string) types.User {
 	var user types.User
-	err := db.QueryRow(`SELECT username, firstname, lastname, perms, credit FROM customer WHERE username=$1;`, username).Scan(
+	err := db.QueryRow(`SELECT username, firstname, lastname, perms, credit, password, salt FROM customer WHERE username=$1;`, username).Scan(
 		&user.Username,
 		&user.FirstName,
 		&user.LastName,
 		&user.Permissions,
 		&user.Credit,
+		&user.Password,
+		&user.Salt,
 	)
 	testWarn(err)
 	return user

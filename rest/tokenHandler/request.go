@@ -1,11 +1,13 @@
 package tokenHandler
 
 import (
-	"github.com/emicklei/go-restful"
-	"strings"
 	"encoding/base64"
+	"github.com/Mr-Pi/dos-backend/database/pgsql"
 	"github.com/Mr-Pi/dos-backend/database/redis"
-	"fmt"
+	"github.com/Mr-Pi/dos-backend/permissions"
+	"github.com/emicklei/go-restful"
+	"log"
+	"strings"
 )
 
 type tokenResponse struct {
@@ -37,9 +39,16 @@ func RequestToken(req *restful.Request, resp *restful.Response) {
 		resp.WriteErrorString(400, "Password is missing")
 		return
 	}
-	// TODO Verify with PostgreSQL
-	fmt.Printf("User is %s\n", headerParts[0])
-	fmt.Printf("Pass is %s\n", headerParts[1])
+	username := headerParts[0]
+	password := headerParts[1]
+	user := pgsql.GETUser(username)
+	if user.Password != permissions.HashPasswordOld(password, user.Salt) {
+		log.Println("Failed to auth", user)
+		log.Println("PW1", permissions.HashPasswordOld(password, user.Salt))
+		log.Println("PW2", user.Password)
+		resp.WriteErrorString(401, "Wrong Password")
+		return
+	}
 
 	responseObj := tokenResponse{redis.NewAuthToken(headerParts[0])}
 	resp.WriteEntity(responseObj)
