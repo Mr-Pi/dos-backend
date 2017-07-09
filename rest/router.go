@@ -54,7 +54,6 @@ type TokenResource struct {
 func (p TokenResource) RegisterTo(container *restful.Container) {
 	ws := new(restful.WebService)
 	ws.Path("/token")
-	ws.Consumes(restful.MIME_JSON)
 	ws.Produces(restful.MIME_JSON)
 	// TODO ws.Route(ws.DELETE("/{token}").To(handler.GetUser))
 	ws.Route(ws.POST("").To(tokenHandler.RequestToken))
