@@ -1,12 +1,12 @@
 package types
 
 type Drink struct {
-	EAN             string
-	Name            string
-	PriceOrder      float64
-	PriceResell     float64
-	Amount          int64
-	Supplier        Supplier
-	RedeliverAmount int64
-	ImgUrl          string
+	EAN             string `json:"ean"`
+	Name            string `json:"name"`
+	PriceOrder      float64 `json:"priceOrder"`
+	PriceResell     float64 `json:"priceResell"`
+	Amount          int64 `json:"amount"`
+	Supplier        Supplier `json:"supplier"`
+	RedeliverAmount int64 `json:"redeliverAmount"`
+	ImgUrl          string `json:"imageUrl"`
 }
