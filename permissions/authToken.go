@@ -5,7 +5,6 @@ import (
 	"github.com/Mr-Pi/dos-backend/database/redis"
 	"strings"
 	"encoding/base64"
-	"fmt"
 )
 
 func ReqToUser(r *http.Request) (username string, rc int) {
@@ -28,7 +27,6 @@ func ReqToUser(r *http.Request) (username string, rc int) {
 		rc = 400
 		return
 	}
-	fmt.Println(string(rawHeader))
 	username = redis.AuthTokenToUser(string(rawHeader))
 	if username == "" {
 		rc = 401
