@@ -1,5 +1,0 @@
-{
-	"pgsql": {
-		"Url": "postgres://dos:dos@localhost:7070/dos?sslmode=disable"
-	}
-}
