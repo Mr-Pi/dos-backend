@@ -97,6 +97,7 @@ func AddUser(request *restful.Request, response *restful.Response) {
 }
 
 func UpdateUser(request *restful.Request, response *restful.Response) {
+	//TODO: add permission check
 	username := request.PathParameter("username")
 	userOrg := pgsql.GETUser(username)
 	user := pgsql.GETUser(username)
