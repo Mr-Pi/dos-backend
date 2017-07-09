@@ -7,7 +7,6 @@ import (
 	"net/http"
 	"github.com/Mr-Pi/dos-backend/permissions"
 	"github.com/Mr-Pi/dos-backend/types"
-	"fmt"
 )
 
 var requiredPermissions = types.UserPermissions{
