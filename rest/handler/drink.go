@@ -6,9 +6,6 @@ import (
 	"github.com/Mr-Pi/dos-backend/types"
 	"github.com/emicklei/go-restful"
 	"net/http"
-	"fmt"
-	"os/user"
-	"os"
 )
 
 var otherUserPermission = types.UserPermissions{
