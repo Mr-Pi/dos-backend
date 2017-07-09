@@ -5,9 +5,9 @@
 --  
 
 CREATE TABLE supplier (
-		id bigint NOT NULL  DEFAULT 0,
-		address text,
-		name text,
+		id bigint NOT NULL ,
+		address text NOT NULL  DEFAULT '',
+		name text NOT NULL ,
 		deliverTime bigint NOT NULL  DEFAULT 3
 );
 CREATE SEQUENCE supplier_id_seq START 1 INCREMENT 1 ;
