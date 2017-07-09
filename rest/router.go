@@ -47,10 +47,9 @@ func (p DrinkResource) RegisterTo(container *restful.Container) {
 
 	ws.Consumes(restful.MIME_JSON)
 	ws.Produces(restful.MIME_JSON)
-	ws.PathParameter("username", "Name of the user who drank. You need permission to use this")
 	ws.Route(ws.GET("").To(handler.ListDrinks))
 	ws.Route(ws.GET("/{ean}").To(handler.GetDrink))
-	//ws.Route(ws.PUT("/{ean}").To(handler.PutDrink))
+	ws.Route(ws.PUT("/{ean}").To(handler.PutDrink))
 	restful.Add(ws)
 }
 

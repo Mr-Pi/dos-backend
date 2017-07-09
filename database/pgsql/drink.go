@@ -46,11 +46,25 @@ func GETDrink(drinkEAN string) types.Drink {
 	return drink
 }
 
-// TODO Test
 func CreateDrink(drink types.Drink) (success bool) {
 	success = false
 	stmt, err := db.Prepare(`INSERT INTO drink (ean, name, amount, supplier, redeliveramount, priceorder, priceresell, imgurl)
 		VALUES ($1, $2, $3, $4, $5, $6, $7, $8);`)
+	if err != nil {
+		return
+	}
+	defer stmt.Close()
+	_, err = stmt.Exec(drink.EAN, drink.Name, drink.Amount, drink.Supplier, drink.RedeliverAmount, drink.PriceOrder, drink.PriceResell, drink.ImgUrl)
+	if err != nil {
+		return
+	}
+	success = true
+	return
+}
+
+func OverwriteDrink(drink types.Drink) (success bool) {
+	success = false
+	stmt, err := db.Prepare(`UPDATE drink SET name = $2, amount = $3, supplier = $4, redeliveramount = $5, priceorder = $6, priceresell = $7, imgurl = $8 WHERE ean = $1`)
 	if err != nil {
 		return
 	}
