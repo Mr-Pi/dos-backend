@@ -9,7 +9,7 @@ import (
 )
 
 type tokenResponse struct {
-	Token string `json:"tocken"`
+	Token string `json:"token"`
 }
 
 func RequestToken(req *restful.Request, resp *restful.Response) {
