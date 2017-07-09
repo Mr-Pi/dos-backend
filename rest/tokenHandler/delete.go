@@ -28,7 +28,7 @@ func DeleteToken(req *restful.Request, resp *restful.Response) {
 	b64 := strings.Split(authHeaders[0], " ")[1]
 	rawHeader, err := base64.StdEncoding.DecodeString(b64)
 	if err != nil {
-		rc = 400
+		resp.WriteErrorString(400, "Please give us some valid Base64. It's not that hard")
 		return
 	}
 	result := redis.RemoveAuthToken(string(rawHeader))
