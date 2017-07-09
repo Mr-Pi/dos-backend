@@ -8,7 +8,6 @@ import (
 	"net/http"
 	"github.com/Mr-Pi/dos-backend/rest/userHandler"
 	"github.com/Mr-Pi/dos-backend/rest/tokenHandler"
-	"os"
 )
 
 type SupplierResource struct {
