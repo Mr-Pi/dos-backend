@@ -14,7 +14,7 @@ type SupplierResource struct {
 
 func (p SupplierResource) RegisterTo(container *restful.Container) {
 	ws := new(restful.WebService)
-	ws.Path("/supplier")
+	ws.Path("/suppliers")
 	ws.Consumes(restful.MIME_JSON)
 	ws.Produces(restful.MIME_JSON)
 	ws.Route(ws.GET("/{id}").To(handler.GetSupplier))
@@ -27,7 +27,7 @@ type DrinkResource struct {
 
 func (p DrinkResource) RegisterTo(container *restful.Container) {
 	ws := new(restful.WebService)
-	ws.Path("/drink")
+	ws.Path("/drinks")
 	ws.Consumes(restful.MIME_JSON)
 	ws.Produces(restful.MIME_JSON)
 	ws.Route(ws.GET("/{ean}").To(handler.GetDrink))
@@ -40,7 +40,7 @@ type UserResource struct {
 
 func (p UserResource) RegisterTo(container *restful.Container) {
 	ws := new(restful.WebService)
-	ws.Path("/user")
+	ws.Path("/users")
 	ws.Consumes(restful.MIME_JSON)
 	ws.Produces(restful.MIME_JSON)
 	ws.Route(ws.GET("/{username}").To(handler.GetUser))
@@ -53,7 +53,7 @@ type TokenResource struct {
 
 func (p TokenResource) RegisterTo(container *restful.Container) {
 	ws := new(restful.WebService)
-	ws.Path("/token")
+	ws.Path("/tokens")
 	ws.Produces(restful.MIME_JSON)
 	ws.Route(ws.DELETE("").To(tokenHandler.DeleteToken))
 	ws.Route(ws.GET("").To(tokenHandler.RequestToken))
