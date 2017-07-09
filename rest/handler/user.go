@@ -75,6 +75,10 @@ func AddUser(request *restful.Request, response *restful.Response) {
 		response.WriteErrorString(rc, "You need more permissions to create users")
 		return
 	}
+	if username == "_self" {
+		response.WriteErrorString(http.StatusForbidden, "_self is a special user")
+		return
+	}
 	user := new(types.User)
 	err := request.ReadEntity(user)
 	user.Username = username
@@ -94,11 +98,32 @@ func AddUser(request *restful.Request, response *restful.Response) {
 
 func UpdateUser(request *restful.Request, response *restful.Response) {
 	username := request.PathParameter("username")
+	userOrg := pgsql.GETUser(username)
 	user := pgsql.GETUser(username)
 	err := request.ReadEntity(&user)
 	if err != nil {
 		response.WriteErrorString(http.StatusInternalServerError, err.Error())
 		return
 	}
-	log.Println(permissions.HashPasswordNew("test"))
+	if username == "_self" {
+		response.WriteErrorString(http.StatusForbidden, "_self is a special user")
+		return
+	}
+	user.Salt = userOrg.Salt
+	if user.Password != userOrg.Password {
+		user.Password, user.Salt = permissions.HashPasswordNew(user.Password)
+		log.Println("Update Password for user", user.Username)
+	}
+	if request.QueryParameter("action") == "payment" {
+		newCredit := userOrg.Credit + user.Credit
+		user.Credit = newCredit
+		log.Println("User", user.Username, "paid", user.Credit, "to", userOrg.Credit, "new credit is", newCredit)
+	}
+	err = pgsql.UpdateUser(user)
+	if err != nil {
+		log.Println("Can't update user", user, err)
+		response.WriteErrorString(http.StatusInternalServerError, "Something wrent wrong")
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusOK, user)
 }

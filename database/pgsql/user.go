@@ -5,6 +5,11 @@ import (
 	"log"
 )
 
+func UpdateUser(user types.User) error {
+	_, err := db.Query(`UPDATE customer SET firstname=$2, lastname=$3, perms=$4, password=$5, salt=$6 WHERE username=$1;`, user.Username, user.FirstName, user.LastName, user.Permissions, user.Password, user.Salt)
+	return err
+}
+
 func CreateUser(user types.User) (err error) {
 	_, err = db.Query(`INSERT INTO customer ( username, firstname, lastname, perms, password, salt ) VALUES ($1,$2,$3,$4,$5,$6);`, user.Username, user.FirstName, user.LastName, user.Permissions, user.Password, user.Salt)
 	return err
