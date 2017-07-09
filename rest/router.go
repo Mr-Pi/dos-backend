@@ -55,8 +55,8 @@ func (p TokenResource) RegisterTo(container *restful.Container) {
 	ws := new(restful.WebService)
 	ws.Path("/token")
 	ws.Produces(restful.MIME_JSON)
-	ws.Route(ws.DELETE("/{token}").To(tokenHandler.DeleteToken))
-	ws.Route(ws.POST("").To(tokenHandler.RequestToken))
+	ws.Route(ws.DELETE("").To(tokenHandler.DeleteToken))
+	ws.Route(ws.GET("").To(tokenHandler.RequestToken))
 	restful.Add(ws)
 }
 
