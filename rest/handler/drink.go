@@ -2,13 +2,13 @@ package handler
 
 import (
 	"github.com/Mr-Pi/dos-backend/database/pgsql"
-	"github.com/emicklei/go-restful"
-	"net/http"
 	"github.com/Mr-Pi/dos-backend/permissions"
 	"github.com/Mr-Pi/dos-backend/types"
+	"github.com/emicklei/go-restful"
+	"net/http"
 )
 
-var otherUserPermission = types.UserPermissions {
+var otherUserPermission = types.UserPermissions{
 	PatchDrinkEveryone: true,
 }
 
@@ -69,10 +69,6 @@ func DrinkDrink(req *restful.Request, resp *restful.Response) {
 	}
 	// Drink
 	drink := pgsql.GETDrink(drinkEAN)
-	if drink.Amount < 1 {
-		resp.WriteErrorString(http.StatusGone, "No more drinks available")
-		return
-	}
 	err := pgsql.DecrementDrinkAmount(drinkEAN, 1)
 	if err != nil {
 		resp.WriteError(500, err)
