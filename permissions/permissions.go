@@ -1,13 +1,13 @@
 package permissions
 
 import (
-	"github.com/Mr-Pi/dos-backend/types"
 	"github.com/Mr-Pi/dos-backend/database/pgsql"
+	"github.com/Mr-Pi/dos-backend/types"
 )
 
 func CheckUserPermissions(username string, reqPerm types.UserPermissions) (rc int) {
 	rc = 200
-	perm := pgsql.GETUser(username).Permissions
+	perm := pgsql.GETPermissions(pgsql.GETUser(username).Permissions)
 	checkPerm(perm.PatchDrinkEveryone, reqPerm.PatchDrinkEveryone, &rc)
 	if rc != 200 {
 		return

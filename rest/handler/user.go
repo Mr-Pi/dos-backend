@@ -34,12 +34,13 @@ func ListUsers(request *restful.Request, response *restful.Response) {
 func GetUser(request *restful.Request, response *restful.Response) {
 	ownUser, rc := permissions.ReqToUser(request.Request)
 	username := request.PathParameter("username")
-	if rc != 200 {
+	if rc != 200 && username != "_self" {
 		response.WriteErrorString(rc, "Can't check permissions")
 		return
-	}
-
-	if username == "_self" {
+	} else if rc != 200 && username == "_self" {
+		response.WriteErrorString(401, "Please login")
+		return
+	} else if username == "_self" {
 		response.WriteEntity(pgsql.GETUser(ownUser))
 		return
 	}
@@ -56,7 +57,6 @@ func GetUser(request *restful.Request, response *restful.Response) {
 	}
 }
 
-/*
 func AddUser(request *restful.Request, response *restful.Response) {
 	ownUser, rc := permissions.ReqToUser(request.Request)
 	username := request.PathParameter("username")
@@ -64,12 +64,22 @@ func AddUser(request *restful.Request, response *restful.Response) {
 		response.WriteErrorString(rc, "Can't check permissions")
 		return
 	}
-	var user = struct{
-	Username    string `json:"uid"`
-	FirstName   string `json:"givenName"`
-	LastName    string `json:"surname"`
-	Credit      float64 `json:"credit"`
-	Password    string `json:"-"`
-	RFIDTag     []string `json:"rfidTags"`
+	rc = permissions.CheckUserPermissions(ownUser, requiredPermissionsUserMod)
+	if rc != 200 {
+		response.WriteErrorString(rc, "You need more permissions to create users")
+		return
+	}
+	user := new(types.User)
+	err := request.ReadEntity(user)
+	user.Username = username
+	if err != nil {
+		response.WriteErrorString(http.StatusInternalServerError, err.Error())
+		return
+	}
+	err = pgsql.CreateUser(*user)
+	if err != nil {
+		response.WriteErrorString(http.StatusInternalServerError, err.Error())
+		return
+	}
+	response.WriteHeaderAndEntity(http.StatusCreated, user)
 }
-}*/
