@@ -6,6 +6,7 @@ import (
 	"github.com/Mr-Pi/dos-backend/types"
 	"github.com/emicklei/go-restful"
 	"net/http"
+	"fmt"
 )
 
 var otherUserPermission = types.UserPermissions{
@@ -68,6 +69,7 @@ func DrinkDrink(req *restful.Request, resp *restful.Response) {
 		return
 	}
 	// Drink
+	fmt.Printf("%s -> %s\n", targetUser, drinkEAN)
 	drink := pgsql.GETDrink(drinkEAN)
 	err := pgsql.DecrementDrinkAmount(drinkEAN, 1)
 	if err != nil {
