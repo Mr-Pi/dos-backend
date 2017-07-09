@@ -9,4 +9,5 @@ type Drink struct {
 	Supplier        Supplier
 	RedeliverAmount int64
 	ImgUrl          string
+	Size            string
 }
