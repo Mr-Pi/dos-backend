@@ -63,7 +63,6 @@ func PutDrink(req *restful.Request, resp *restful.Response) {
 
 func DrinkDrink(req *restful.Request, resp *restful.Response) {
 	// Username
-	fmt.Println("LAL: " + req.Request.Header.Get("Authorization"))
 	username, rc := permissions.ReqToUser(req.Request)
 	if rc != 200 {
 		resp.WriteErrorString(rc, "Can't check permissions")
@@ -102,4 +101,19 @@ func DrinkDrink(req *restful.Request, resp *restful.Response) {
 		resp.WriteError(500, err)
 		return
 	}
+}
+
+func DeleteDrink(req *restful.Request, resp *restful.Response) {
+	ownUser, rc := permissions.ReqToUser(req.Request)
+	ean := req.PathParameter("ean")
+	if rc != 200 {
+		resp.WriteErrorString(rc, "Can't check permissions")
+		return
+	}
+	rc = permissions.CheckUserPermissions(ownUser, requiredPermissionsDrinkMod)
+	if rc != 200 {
+		resp.WriteErrorString(rc, "You need more permissions to delete drinks")
+		return
+	}
+	pgsql.DeleteDrink(ean)
 }

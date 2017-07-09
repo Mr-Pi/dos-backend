@@ -50,6 +50,7 @@ func (p DrinkResource) RegisterTo(container *restful.Container) {
 	ws.Route(ws.GET("").To(handler.ListDrinks))
 	ws.Route(ws.GET("/{ean}").To(handler.GetDrink))
 	ws.Route(ws.PUT("/{ean}").To(handler.PutDrink))
+	ws.Route(ws.DELETE("/{ean}").To(handler.DeleteDrink))
 	restful.Add(ws)
 }
 
