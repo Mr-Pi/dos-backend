@@ -87,3 +87,12 @@ func DecrementDrinkAmount(drinkEAN string, amount uint32) (err error) {
 	return
 }
 
+func DeleteDrink(ean string) {
+	stmt, err := db.Prepare(`DELETE FROM drink WHERE ean = $1`)
+	if err != nil {
+		return
+	}
+	defer stmt.Close()
+	_, err = stmt.Exec(ean)
+	return
+}

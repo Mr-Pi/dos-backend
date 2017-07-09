@@ -43,13 +43,13 @@ func (p DrinkResource) RegisterTo(container *restful.Container) {
 	ws.Path("/drinks")
 
 	ws.Route(ws.POST("/{ean}/order").To(handler.DrinkDrink))
-	ws.Route(ws.POST("/{ean}/order/{username}").To(handler.DrinkDrink))
 
 	ws.Consumes(restful.MIME_JSON)
 	ws.Produces(restful.MIME_JSON)
 	ws.Route(ws.GET("").To(handler.ListDrinks))
 	ws.Route(ws.GET("/{ean}").To(handler.GetDrink))
 	ws.Route(ws.PUT("/{ean}").To(handler.PutDrink))
+	ws.Route(ws.DELETE("/{ean}").To(handler.DeleteDrink))
 	restful.Add(ws)
 }
 
