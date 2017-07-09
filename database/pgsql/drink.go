@@ -49,13 +49,13 @@ func GETDrink(drinkEAN string) types.Drink {
 
 func CreateDrink(drink types.Drink) (success bool) {
 	success = false
-	stmt, err := db.Prepare(`INSERT INTO drink (ean, name, amount, supplier, redeliveramount, priceorder, priceresell, imgurl)
-		VALUES ($1, $2, $3, $4, $5, $6, $7, $8);`)
+	stmt, err := db.Prepare(`INSERT INTO drink (ean, name, amount, supplier, redeliveramount, priceorder, priceresell, imgurl, size)
+		VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);`)
 	if err != nil {
 		return
 	}
 	defer stmt.Close()
-	_, err = stmt.Exec(drink.EAN, drink.Name, drink.Amount, drink.Supplier, drink.RedeliverAmount, drink.PriceOrder, drink.PriceResell, drink.ImgUrl)
+	_, err = stmt.Exec(drink.EAN, drink.Name, drink.Amount, drink.Supplier, drink.RedeliverAmount, drink.PriceOrder, drink.PriceResell, drink.ImgUrl, drink.Size)
 	if err != nil {
 		return
 	}
@@ -65,12 +65,12 @@ func CreateDrink(drink types.Drink) (success bool) {
 
 func OverwriteDrink(drink types.Drink) (success bool) {
 	success = false
-	stmt, err := db.Prepare(`UPDATE drink SET name = $2, amount = $3, supplier = $4, redeliveramount = $5, priceorder = $6, priceresell = $7, imgurl = $8 WHERE ean = $1`)
+	stmt, err := db.Prepare(`UPDATE drink SET name = $2, amount = $3, supplier = $4, redeliveramount = $5, priceorder = $6, priceresell = $7, imgurl = $8, size = $9 WHERE ean = $1`)
 	if err != nil {
 		return
 	}
 	defer stmt.Close()
-	_, err = stmt.Exec(drink.EAN, drink.Name, drink.Amount, drink.Supplier, drink.RedeliverAmount, drink.PriceOrder, drink.PriceResell, drink.ImgUrl)
+	_, err = stmt.Exec(drink.EAN, drink.Name, drink.Amount, drink.Supplier, drink.RedeliverAmount, drink.PriceOrder, drink.PriceResell, drink.ImgUrl, drink.Size)
 	if err != nil {
 		return
 	}
