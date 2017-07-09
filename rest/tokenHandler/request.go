@@ -42,8 +42,10 @@ func RequestToken(req *restful.Request, resp *restful.Response) {
 	username := headerParts[0]
 	password := headerParts[1]
 	user := pgsql.GETUser(username)
-	log.Println(user)
 	if user.Password != permissions.HashPasswordOld(password, user.Salt) {
+		log.Println("Failed to auth", user)
+		log.Println("PW1", permissions.HashPasswordOld(password, user.Salt))
+		log.Println("PW2", user.Password)
 		resp.WriteErrorString(401, "Wrong Password")
 		return
 	}
