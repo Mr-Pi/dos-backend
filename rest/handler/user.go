@@ -5,6 +5,7 @@ import (
 	"github.com/Mr-Pi/dos-backend/permissions"
 	"github.com/Mr-Pi/dos-backend/types"
 	"github.com/emicklei/go-restful"
+	"log"
 	"net/http"
 )
 
@@ -15,6 +16,11 @@ var requiredPermissionsUserInfo = types.UserPermissions{
 
 var requiredPermissionsUserMod = types.UserPermissions{
 	ModUser: true,
+}
+
+var requiredPermissionsUserChangePW = types.UserPermissions{
+	ModUser:        true,
+	SetOwnPassword: true,
 }
 
 func ListUsers(request *restful.Request, response *restful.Response) {
@@ -72,14 +78,27 @@ func AddUser(request *restful.Request, response *restful.Response) {
 	user := new(types.User)
 	err := request.ReadEntity(user)
 	user.Username = username
+	user.Password, user.Salt = permissions.HashPasswordNew(user.Password)
 	if err != nil {
 		response.WriteErrorString(http.StatusInternalServerError, err.Error())
 		return
 	}
 	err = pgsql.CreateUser(*user)
 	if err != nil {
+		log.Println("Can't create user", user, err)
 		response.WriteErrorString(http.StatusInternalServerError, "User may allready exist")
 		return
 	}
 	response.WriteHeaderAndEntity(http.StatusCreated, user)
+}
+
+func UpdateUser(request *restful.Request, response *restful.Response) {
+	username := request.PathParameter("username")
+	user := pgsql.GETUser(username)
+	err := request.ReadEntity(&user)
+	if err != nil {
+		response.WriteErrorString(http.StatusInternalServerError, err.Error())
+		return
+	}
+	log.Println(permissions.HashPasswordNew("test"))
 }

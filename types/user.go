@@ -7,5 +7,6 @@ type User struct {
 	Credit      float64
 	Password    string
 	RFIDTag     []string
-	Permissions string
+	Permissions string `json:"-"`
+	Salt        string
 }
