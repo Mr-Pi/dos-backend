@@ -6,8 +6,8 @@ import (
 )
 
 func CreateUser(user types.User) (err error) {
-	db.QueryRow(`INSERT INTO customer ( username, firstname, lastname, perms ) VALUES ($1,$2,$3,$4);`, user.Username, user.FirstName, user.LastName, user.Permissions).Scan()
-	return
+	_, err = db.Query(`INSERT INTO customer ( username, firstname, lastname, perms ) VALUES ($1,$2,$3,$4);`, user.Username, user.FirstName, user.LastName, user.Permissions)
+	return err
 }
 
 func ListUsers() []string {
