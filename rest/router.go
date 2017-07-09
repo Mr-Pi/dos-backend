@@ -3,6 +3,7 @@ package rest
 import (
 	"github.com/Mr-Pi/dos-backend/config"
 	"github.com/Mr-Pi/dos-backend/rest/handler"
+	"github.com/Mr-Pi/dos-backend/rest/tokenHandler"
 	"github.com/emicklei/go-restful"
 	"log"
 	"net/http"
@@ -47,6 +48,19 @@ func (p UserResource) RegisterTo(container *restful.Container) {
 	restful.Add(ws)
 }
 
+type TokenResource struct {
+}
+
+func (p TokenResource) RegisterTo(container *restful.Container) {
+	ws := new(restful.WebService)
+	ws.Path("/token")
+	ws.Consumes(restful.MIME_JSON)
+	ws.Produces(restful.MIME_JSON)
+	// TODO ws.Route(ws.DELETE("/{token}").To(handler.GetUser))
+	ws.Route(ws.POST("").To(tokenHandler.RequestToken))
+	restful.Add(ws)
+}
+
 func InitRouter(cfg config.Config) {
 	wsContainer := restful.NewContainer()
 	userResource := UserResource{}
@@ -55,6 +69,8 @@ func InitRouter(cfg config.Config) {
 	drinkResource.RegisterTo(wsContainer)
 	supplierResource := SupplierResource{}
 	supplierResource.RegisterTo(wsContainer)
+	tokenResource := TokenResource{}
+	tokenResource.RegisterTo(wsContainer)
 	restful.Filter(restful.OPTIONSFilter())
 	restful.Filter(globalLogging)
 	log.Fatal(http.ListenAndServe(cfg.Listen.Listen, nil))
