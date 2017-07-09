@@ -14,7 +14,7 @@ type PermissionResource struct {
 
 func (p PermissionResource) RegisterTo(container *restful.Container) {
 	ws := new(restful.WebService)
-	ws.Path("/permission")
+	ws.Path("/permissions")
 	ws.Consumes(restful.MIME_JSON)
 	ws.Produces(restful.MIME_JSON)
 	ws.Route(ws.GET("/{type}").To(handler.GetPermission))
