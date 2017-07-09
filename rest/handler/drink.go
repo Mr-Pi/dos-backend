@@ -92,7 +92,6 @@ func DrinkDrink(req *restful.Request, resp *restful.Response) {
 		return
 	}
 	// Drink
-	fmt.Printf("%s -> %s\n", targetUser, drinkEAN)
 	drink := pgsql.GETDrink(drinkEAN)
 	err := pgsql.DecrementDrinkAmount(drinkEAN, 1)
 	if err != nil {
