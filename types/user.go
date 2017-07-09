@@ -5,8 +5,8 @@ type User struct {
 	FirstName   string
 	LastName    string
 	Credit      float64
-	Password    string
+	Password    string `json:"-"`
 	RFIDTag     []string
-	Permissions string `json:"-"`
+	Permissions string
 	Salt        string
 }
