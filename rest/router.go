@@ -2,30 +2,65 @@ package rest
 
 import (
 	"github.com/Mr-Pi/dos-backend/config"
-	"github.com/Mr-Pi/dos-backend/rest/drinkHandler"
-	"github.com/Mr-Pi/dos-backend/rest/homeHandler"
-	"github.com/Mr-Pi/dos-backend/rest/permHandler"
-	"github.com/Mr-Pi/dos-backend/rest/supplierHandler"
-	"github.com/Mr-Pi/dos-backend/rest/userHandler"
-	"github.com/Mr-Pi/dos-backend/rest/userListHandler"
-	"github.com/gorilla/mux"
+	"github.com/Mr-Pi/dos-backend/rest/handler"
+	"github.com/emicklei/go-restful"
+	"log"
 	"net/http"
 )
 
+type SupplierResource struct {
+}
+
+func (p SupplierResource) RegisterTo(container *restful.Container) {
+	ws := new(restful.WebService)
+	ws.Path("/supplier")
+	ws.Consumes(restful.MIME_JSON)
+	ws.Produces(restful.MIME_JSON)
+	ws.Route(ws.GET("/{id}").To(handler.GetSupplier))
+	ws.Route(ws.GET("").To(handler.ListSuppliers))
+	restful.Add(ws)
+}
+
+type DrinkResource struct {
+}
+
+func (p DrinkResource) RegisterTo(container *restful.Container) {
+	ws := new(restful.WebService)
+	ws.Path("/drink")
+	ws.Consumes(restful.MIME_JSON)
+	ws.Produces(restful.MIME_JSON)
+	ws.Route(ws.GET("/{ean}").To(handler.GetDrink))
+	ws.Route(ws.GET("").To(handler.ListDrinks))
+	restful.Add(ws)
+}
+
+type UserResource struct {
+}
+
+func (p UserResource) RegisterTo(container *restful.Container) {
+	ws := new(restful.WebService)
+	ws.Path("/user")
+	ws.Consumes(restful.MIME_JSON)
+	ws.Produces(restful.MIME_JSON)
+	ws.Route(ws.GET("/{username}").To(handler.GetUser))
+	ws.Route(ws.GET("").To(handler.ListUsers))
+	restful.Add(ws)
+}
+
 func InitRouter(cfg config.Config) {
-	r := mux.NewRouter()
-	r.HandleFunc("/", homeHandler.Handle).Methods("GET")
-	r.HandleFunc("/user", userListHandler.Handle).Methods("GET")
-	r.HandleFunc("/user/{username}", userHandler.HandleGET).Methods("GET")
-	r.HandleFunc("/user/{username}", userHandler.HandleMOD).Methods("PUT", "PATCH")
-	r.HandleFunc("/drink", drinkHandler.HandleList).Methods("GET")
-	r.HandleFunc("/drink/{drink}", drinkHandler.HandleGET).Methods("GET")
-	r.HandleFunc("/drink/{drink}", drinkHandler.HandleMOD).Methods("PUT", "PATCH")
-	r.HandleFunc("/supplier", supplierHandler.HandleList).Methods("GET")
-	r.HandleFunc("/supplier/{supplier}", supplierHandler.HandleGET).Methods("GET")
-	r.HandleFunc("/supplier/{supplier}", supplierHandler.HandleMOD).Methods("PUT", "PATCH")
-	r.HandleFunc("/permissions", permissionHandler.HandleList).Methods("GET")
-	r.HandleFunc("/permissions/{permType}", permissionHandler.HandleGET).Methods("GET")
-	r.HandleFunc("/permissions/{permType}", permissionHandler.HandleMOD).Methods("PUT", "PATCH")
-	http.ListenAndServe(cfg.Listen.Listen, r)
+	wsContainer := restful.NewContainer()
+	userResource := UserResource{}
+	userResource.RegisterTo(wsContainer)
+	drinkResource := DrinkResource{}
+	drinkResource.RegisterTo(wsContainer)
+	supplierResource := SupplierResource{}
+	supplierResource.RegisterTo(wsContainer)
+	restful.Filter(restful.OPTIONSFilter())
+	restful.Filter(globalLogging)
+	log.Fatal(http.ListenAndServe(cfg.Listen.Listen, nil))
+}
+
+func globalLogging(req *restful.Request, resp *restful.Response, chain *restful.FilterChain) {
+	log.Printf("[REST] %s,%s\n", req.Request.Method, req.Request.URL)
+	chain.ProcessFilter(req, resp)
 }
