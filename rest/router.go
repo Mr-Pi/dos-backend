@@ -4,6 +4,8 @@ import (
 	"github.com/Mr-Pi/dos-backend/config"
 	"github.com/Mr-Pi/dos-backend/rest/drinkHandler"
 	"github.com/Mr-Pi/dos-backend/rest/homeHandler"
+	"github.com/Mr-Pi/dos-backend/rest/permHandler"
+	"github.com/Mr-Pi/dos-backend/rest/supplierHandler"
 	"github.com/Mr-Pi/dos-backend/rest/userHandler"
 	"github.com/Mr-Pi/dos-backend/rest/userListHandler"
 	"github.com/gorilla/mux"
@@ -19,5 +21,11 @@ func InitRouter(cfg config.Config) {
 	r.HandleFunc("/drink", drinkHandler.HandleList).Methods("GET")
 	r.HandleFunc("/drink/{drink}", drinkHandler.HandleGET).Methods("GET")
 	r.HandleFunc("/drink/{drink}", drinkHandler.HandleMOD).Methods("POST")
+	r.HandleFunc("/supplier", supplierHandler.HandleList).Methods("GET")
+	r.HandleFunc("/supplier/{supplier}", supplierHandler.HandleGET).Methods("GET")
+	r.HandleFunc("/supplier/{supplier}", supplierHandler.HandleMOD).Methods("POST")
+	r.HandleFunc("/permissions", permissionHandler.HandleList).Methods("GET")
+	r.HandleFunc("/permissions/{permType}", permissionHandler.HandleGET).Methods("GET")
+	r.HandleFunc("/permissions/{permType}", permissionHandler.HandleMOD).Methods("POST")
 	http.ListenAndServe(cfg.Listen.Listen, r)
 }

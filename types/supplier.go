@@ -1,7 +1,8 @@
 package types
 
 type Supplier struct {
-	Name string
-	Address string
-	DeliverTime uint32
+	ID          int64
+	Name        string
+	Address     string
+	DeliverTime int64
 }

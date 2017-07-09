@@ -30,7 +30,8 @@ func TestDrink(drink string) bool {
 
 func GETDrink(drinkEAN string) types.Drink {
 	var drink types.Drink
-	err := db.QueryRow(`SELECT ean, name, amount, redeliveramount, priceorder, priceresell, imgurl FROM drink WHERE ean=$1;`, drinkEAN).Scan(
+	var supplierID int64
+	err := db.QueryRow(`SELECT ean, name, amount, redeliveramount, priceorder, priceresell, imgurl, supplier FROM drink WHERE ean=$1;`, drinkEAN).Scan(
 		&drink.EAN,
 		&drink.Name,
 		&drink.Amount,
@@ -38,7 +39,9 @@ func GETDrink(drinkEAN string) types.Drink {
 		&drink.PriceOrder,
 		&drink.PriceResell,
 		&drink.ImgUrl,
+		&supplierID,
 	)
+	drink.Supplier = GETSupplier(supplierID)
 	testWarn(err)
 	return drink
 }
