@@ -6,6 +6,7 @@ import (
 	"github.com/Mr-Pi/dos-backend/types"
 	"github.com/emicklei/go-restful"
 	"net/http"
+	"fmt"
 )
 
 var otherUserPermission = types.UserPermissions{
@@ -62,6 +63,7 @@ func PutDrink(req *restful.Request, resp *restful.Response) {
 
 func DrinkDrink(req *restful.Request, resp *restful.Response) {
 	// Username
+	fmt.Println("LAL: " + req.Request.Header.Get("Authorization"))
 	username, rc := permissions.ReqToUser(req.Request)
 	if rc != 200 {
 		resp.WriteErrorString(rc, "Can't check permissions")
