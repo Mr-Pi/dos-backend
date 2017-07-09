@@ -68,7 +68,7 @@ func DrinkDrink(req *restful.Request, resp *restful.Response) {
 		return
 	}
 	// Target user
-	targetUser := req.PathParameter("username")
+	targetUser := req.QueryParameter("username")
 	if targetUser != "" {
 		rc := permissions.CheckUserPermissions(username, otherUserPermission)
 		if rc != 200 {
