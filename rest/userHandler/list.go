@@ -1,11 +1,10 @@
 package userHandler
 
 import (
-	"github.com/emicklei/go-restful"
 	"github.com/Mr-Pi/dos-backend/database/pgsql"
 	"github.com/Mr-Pi/dos-backend/permissions"
 	"github.com/Mr-Pi/dos-backend/types"
-	"errors"
+	"github.com/emicklei/go-restful"
 )
 
 var requiredPermissions = types.UserPermissions{
@@ -16,14 +15,13 @@ var requiredPermissions = types.UserPermissions{
 func ListUsers(req *restful.Request, resp *restful.Response) {
 	username, rc := permissions.ReqToUser(req.Request)
 	if rc != 200 {
-		resp.WriteError(rc, errors.New(""))
+		resp.WriteErrorString(rc, "Can't check permissions")
 		return
 	}
 	rc = permissions.CheckUserPermissions(username, requiredPermissions)
 	if rc != 200 {
-		resp.WriteError(rc, errors.New(""))
+		resp.WriteErrorString(rc, "You need more permissions to list all users")
 		return
 	}
 	resp.WriteEntity(pgsql.ListUsers())
 }
-
