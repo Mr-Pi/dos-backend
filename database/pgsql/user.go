@@ -6,7 +6,7 @@ import (
 )
 
 func UpdateUser(user types.User) error {
-	_, err := db.Query(`UPDATE customer SET firstname=$2, lastname=$3, perms=$4, password=$5, salt=$6 WHERE username=$1;`, user.Username, user.FirstName, user.LastName, user.Permissions, user.Password, user.Salt)
+	_, err := db.Query(`UPDATE customer SET firstname=$2, lastname=$3, perms=$4, password=$5, salt=$6, credit=$7 WHERE username=$1;`, user.Username, user.FirstName, user.LastName, user.Permissions, user.Password, user.Salt, user.Credit)
 	return err
 }
 
