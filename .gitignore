@@ -78,3 +78,4 @@ tags
 # End of https://www.gitignore.io/api/linux,vim,git,osx,go
 
 .idea/
+/config.json
