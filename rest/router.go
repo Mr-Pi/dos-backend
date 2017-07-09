@@ -41,10 +41,16 @@ type DrinkResource struct {
 func (p DrinkResource) RegisterTo(container *restful.Container) {
 	ws := new(restful.WebService)
 	ws.Path("/drinks")
+
+	ws.Route(ws.Method("DRINK").Path("/{ean}").To(handler.DrinkDrink))
+	ws.Route(ws.Method("DRINK").Path("/{ean}/{username}").To(handler.DrinkDrink))
+
 	ws.Consumes(restful.MIME_JSON)
 	ws.Produces(restful.MIME_JSON)
-	ws.Route(ws.GET("/{ean}").To(handler.GetDrink))
+	ws.PathParameter("username", "Name of the user who drank. You need permission to use this")
 	ws.Route(ws.GET("").To(handler.ListDrinks))
+	ws.Route(ws.GET("/{ean}").To(handler.GetDrink))
+	//ws.Route(ws.PUT("/{ean}").To(handler.PutDrink))
 	restful.Add(ws)
 }
 

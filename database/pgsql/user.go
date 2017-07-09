@@ -42,3 +42,14 @@ func GETUser(username string) types.User {
 	testWarn(err)
 	return user
 }
+
+func DecrementUserCredit(username string, amount float64) (err error) {
+	stmt, err := db.Prepare(`UPDATE customer set credit = credit - $1 WHERE username = $2;`)
+	if err != nil {
+		return
+	}
+	defer stmt.Close()
+	_, err = stmt.Exec(amount, username)
+	return
+
+}
