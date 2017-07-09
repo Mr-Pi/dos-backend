@@ -1,12 +1,11 @@
-package userListHandler
+package userHandler
 
 import (
-	"encoding/json"
-	//"github.com/Mr-Pi/dos-backend/permissions"
+	"github.com/emicklei/go-restful"
 	"github.com/Mr-Pi/dos-backend/database/pgsql"
-	"net/http"
 	"github.com/Mr-Pi/dos-backend/permissions"
 	"github.com/Mr-Pi/dos-backend/types"
+	"errors"
 )
 
 var requiredPermissions = types.UserPermissions{
@@ -14,18 +13,17 @@ var requiredPermissions = types.UserPermissions{
 	PatchDrinkEveryone: true,
 }
 
-func Handle(w http.ResponseWriter, r *http.Request) {
-	username, rc := permissions.ReqToUser(r)
+func ListUsers(req *restful.Request, resp *restful.Response) {
+	username, rc := permissions.ReqToUser(req.Request)
 	if rc != 200 {
-		w.WriteHeader(rc)
+		resp.WriteError(rc, errors.New(""))
 		return
 	}
 	rc = permissions.CheckUserPermissions(username, requiredPermissions)
 	if rc != 200 {
-		w.WriteHeader(rc)
+		resp.WriteError(rc, errors.New(""))
 		return
 	}
-	users := pgsql.ListUsers()
-	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(users)
+	resp.WriteEntity(pgsql.ListUsers())
 }
+

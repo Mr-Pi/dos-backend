@@ -16,10 +16,6 @@ func GetUser(request *restful.Request, response *restful.Response) {
 	}
 }
 
-func ListUsers(request *restful.Request, response *restful.Response) {
-	response.WriteEntity(pgsql.ListUsers())
-}
-
 func GetDrink(request *restful.Request, response *restful.Response) {
 	drinkEAN := request.PathParameter("ean")
 	if pgsql.TestDrink(drinkEAN) {
