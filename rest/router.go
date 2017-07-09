@@ -6,7 +6,6 @@ import (
 	"github.com/emicklei/go-restful"
 	"log"
 	"net/http"
-	"github.com/Mr-Pi/dos-backend/rest/userHandler"
 )
 
 type SupplierResource struct {
@@ -44,7 +43,7 @@ func (p UserResource) RegisterTo(container *restful.Container) {
 	ws.Consumes(restful.MIME_JSON)
 	ws.Produces(restful.MIME_JSON)
 	ws.Route(ws.GET("/{username}").To(handler.GetUser))
-	ws.Route(ws.GET("").To(userHandler.ListUsers))
+	ws.Route(ws.GET("").To(handler.ListUsers))
 	restful.Add(ws)
 }
 
