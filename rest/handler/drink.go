@@ -6,8 +6,6 @@ import (
 	"net/http"
 )
 
-
-
 func GetDrink(request *restful.Request, response *restful.Response) {
 	drinkEAN := request.PathParameter("ean")
 	if pgsql.TestDrink(drinkEAN) {

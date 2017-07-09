@@ -9,6 +9,19 @@ import (
 	"net/http"
 )
 
+type PermissionResource struct {
+}
+
+func (p PermissionResource) RegisterTo(container *restful.Container) {
+	ws := new(restful.WebService)
+	ws.Path("/permission")
+	ws.Consumes(restful.MIME_JSON)
+	ws.Produces(restful.MIME_JSON)
+	ws.Route(ws.GET("/{type}").To(handler.GetPermission))
+	ws.Route(ws.GET("").To(handler.ListPermissions))
+	restful.Add(ws)
+}
+
 type SupplierResource struct {
 }
 
@@ -68,6 +81,8 @@ func InitRouter(cfg config.Config) {
 	drinkResource.RegisterTo(wsContainer)
 	supplierResource := SupplierResource{}
 	supplierResource.RegisterTo(wsContainer)
+	permissionResource := PermissionResource{}
+	permissionResource.RegisterTo(wsContainer)
 	tokenResource := TokenResource{}
 	tokenResource.RegisterTo(wsContainer)
 	restful.Filter(restful.OPTIONSFilter())

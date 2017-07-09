@@ -7,9 +7,6 @@ import (
 	"strconv"
 )
 
-
-
-
 func GetSupplier(request *restful.Request, response *restful.Response) {
 	supplierID, _ := strconv.ParseInt(request.PathParameter("id"), 10, 64)
 	if pgsql.TestSupplier(supplierID) {
